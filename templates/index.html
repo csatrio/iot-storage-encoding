@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESP32 Flat-File Binary Buffer & Mark-Compact GC Simulator</title>
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            slate: {
+              950: '#070a13',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom glow & scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+
+    .glow-purple {
+      box-shadow: 0 0 25px -5px rgba(168, 85, 247, 0.25);
+    }
+
+    .glow-emerald {
+      box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.25);
+    }
+
+    .glow-rose {
+      box-shadow: 0 0 25px -5px rgba(244, 63, 94, 0.3);
+    }
+
+    .striped-pattern {
+      background-image: repeating-linear-gradient(45deg, rgba(244, 63, 94, 0.15), rgba(244, 63, 94, 0.15) 10px, rgba(244, 63, 94, 0.25) 10px, rgba(244, 63, 94, 0.25) 20px);
+    }
+  </style>
+</head>
+
+<body
+  class="bg-slate-950 text-slate-100 font-sans min-h-screen antialiased selection:bg-purple-600 selection:text-white">
+
+  <!-- Root App Mount Point -->
+  <div id="app"></div>
+
+  <!-- Diagnostic Error Handler (Visual crash protection) -->
+  <script>
+    window.onerror = function (msg, url, lineNo, columnNo, error) {
+      console.error('UI Crash:', msg, error);
+      const appEl = document.getElementById('app');
+      if (appEl && (!appEl.children || appEl.children.length === 0)) {
+        appEl.innerHTML = '<div style="padding:24px;color:#fca5a5;font-family:monospace;background:#18181b;margin:24px;border-radius:12px;border:1px solid #ef4444">' +
+          '<h3 style="font-size:16px;font-weight:bold;margin-bottom:8px">⚠️ UI Render Error</h3>' +
+          '<p style="font-size:13px;margin-bottom:12px">' + msg + ' (Line ' + lineNo + ')</p>' +
+          '<pre style="font-size:11px;background:#09090b;padding:12px;border-radius:8px;overflow:auto">' + (error && error.stack ? error.stack : msg) + '</pre>' +
+          '</div>';
+      }
+    };
+  </script>
+
+  <!-- Externalized Modular JavaScript Application Logic -->
+  <script type="module" src="/static/index.js"></script>
+</body>
+
+</html>
